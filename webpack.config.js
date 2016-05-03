@@ -1,33 +1,46 @@
 const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const rimraf = require('rimraf');
 const isProduction = process.env.NODE_ENV === 'production';
 
+const babelSettings = JSON.stringify({
+  presets: ['react', 'es2015', 'stage-0'],
+  plugins: ['transform-runtime'],
+});
+
 module.exports = {
-  entry: './src/main.js',
+  context: path.resolve('src'),
+  entry: ['babel-polyfill', './main.js'],
 
   output: {
-    path: './build',
-    filename: 'bundle.js'
+    path: path.resolve('build'),
+    publicPath: '/',
+    filename: `[name].bundle${(isProduction) ? '.[chunkhash]' : ''}.js`,
   },
 
   devtool: (isProduction) ? null : 'eval',
-
-  devServer: {
-    inline: true,
-    contentBase: './src',
-    port: 9000
-  },
 
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['transform-runtime']
-        }
-      }
+        loader: `react-hot!babel?${babelSettings}`,
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css!postcss'),
+      },
+      {
+        test: /\.(svg|png|jpe?g)$/,
+        loader: 'file?name=[path][name].[hash:6].[ext]&limit=4096',
+      },
+      {
+        test: /\.(pdf|zip)$/,
+        loader: 'file?name=[path][name].[hash:6].[ext]',
+      },
     ],
   },
 
@@ -42,15 +55,28 @@ module.exports = {
     extensions: ['', '.js']
   },
 
-  plugins: []
+  plugins: [
+    {
+      apply: (compiler) => {
+        rimraf.sync(compiler.options.output.path);
+      }
+    },
+
+    new HtmlWebpackPlugin({
+      template: './index.html',
+    }),
+
+    new ExtractTextPlugin('[name].[contenthash].css', {
+      allChunks: true,
+      disable: !isProduction,
+    }),
+  ],
 };
 
 if (isProduction) {
   module.exports.plugins.push(
-    new webpack.NoErrorsPlugin()
-  );
+    new webpack.NoErrorsPlugin(),
 
-  module.exports.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
@@ -62,7 +88,7 @@ if (isProduction) {
       },
       output: {
         comments: false
-      }
+      },
     })
   );
 }
