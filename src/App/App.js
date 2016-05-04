@@ -1,6 +1,7 @@
 import React from 'react';
-import './App.css';
+import styles from './App.css';
 
-const App = () => <div>Hello!</div>;
+const App = () =>
+  <div className={styles.foo}>Hello!</div>;
 
 export default App;

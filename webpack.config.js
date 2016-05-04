@@ -3,8 +3,11 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const rimraf = require('rimraf');
+const postcss = require('./_postcss');
+
 const NODE_ENV = process.env.NODE_ENV;
 const isProduction = NODE_ENV === 'production';
+const cssSettings = 'modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]';
 
 module.exports = {
   context: path.resolve('src'),
@@ -31,7 +34,7 @@ module.exports = {
         },
       }, {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css!postcss'),
+        loader: ExtractTextPlugin.extract('style', `css?${cssSettings}!postcss`),
       }, {
         test: /\.(svg|png|jpe?g)$/,
         loader: 'file?name=[path][name].[hash:6].[ext]&limit=4096',
@@ -52,6 +55,8 @@ module.exports = {
     modulesTemplates: ['*-loader', '*'],
     extensions: ['', '.js'],
   },
+
+  postcss,
 
   plugins: [
     {
