@@ -1,5 +1,7 @@
-.foo {
+.app-root {
   background: url('./image.png');
-  width: width('image.png');
-  height: height('image.png');
+  width: width('./image.png');
+  height: height('./image.png');
+  user-select: none;
+  font: 18px "Indie Flower";
 }
