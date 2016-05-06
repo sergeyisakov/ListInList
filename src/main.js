@@ -1,27 +1,29 @@
 /* eslint  global-require: 0 */
 
-import { AppContainer } from 'react-hot-loader';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { render } from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import configureStore from './store/configureStore';
+import Root from './containers/Root';
 
-const rootEl = document.getElementById('app');
+const store = configureStore();
 
-ReactDOM.render(
-  <AppContainer>
-    <App />
+render(
+  <AppContainer >
+    <Root store={store} />
   </AppContainer>,
-  rootEl
+  document.getElementById('root')
 );
 
 if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
-    ReactDOM.render(
+  module.hot.accept('./containers/Root', () => {
+    const NextRoot = require('./containers/Root').default;
+
+    render(
       <AppContainer>
-        <NextApp />
+        <NextRoot store={store} />
       </AppContainer>,
-      rootEl
+      document.getElementById('root')
     );
   });
 }
