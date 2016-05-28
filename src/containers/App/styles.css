@@ -1,7 +1,8 @@
-.app-root {
-  background: url('./image.png');
-  width: width('./image.png');
-  height: height('./image.png');
-  user-select: none;
-  font: 18px "Indie Flower";
+@import 'variables';
+@import 'reset-css';
+
+body {
+  font-family: 'PT Sans';
+  background: #FAFAFA;
+  color: var(--c-gray);
 }

@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const cssImport = require('postcss-import');
 const size = require('postcss-size');
@@ -7,7 +8,7 @@ const cssNext = require('postcss-cssnext');
 const font = require('postcss-font-magician');
 
 module.exports = () => [
-  cssImport({ addDependencyTo: webpack }),
+  cssImport({ addDependencyTo: webpack, path: path.resolve('src', 'styles') }),
   size,
   svgo,
   assets({ basePath: 'src/' }),

@@ -7,7 +7,7 @@ const postcss = require('./_postcss');
 
 const NODE_ENV = process.env.NODE_ENV;
 const isProduction = NODE_ENV === 'production';
-const cssSettings = 'modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]';
+const cssSettings = 'modules&importLoaders=1&localIdentName=[local]___[hash:base64:10]';
 
 module.exports = {
   context: path.resolve('src'),
@@ -48,6 +48,10 @@ module.exports = {
   resolve: {
     modulesDirectories: ['node_modules'],
     extensions: ['', '.js'],
+
+    alias: {
+      components: path.resolve('src', 'components'),
+    },
   },
 
   resolveLoader: {

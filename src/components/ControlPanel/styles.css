@@ -1,0 +1,20 @@
+.control-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 100%;
+  border: 1px solid #E5E5E5;
+  background: #FFF;
+}
+
+.title {
+  font-size: 15px;
+  text-align: center;
+  background: #E5E5E5;
+  padding: 10px 0;
+}
+
+.tabs {
+
+}
