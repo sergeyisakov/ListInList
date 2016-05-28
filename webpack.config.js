@@ -27,11 +27,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel',
-
-        query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['transform-runtime', 'react-hot-loader/babel'],
-        },
       }, {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style', `css?${cssSettings}!postcss`),
