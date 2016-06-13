@@ -1,5 +1,6 @@
-// import * as types from '../constants/ActionTypes';
+import * as types from '../constants/ActionTypes';
 
-// export function addTodo(text) {
-//   return { type: types.ADD_TODO, text };
-// }
+export const addPerson = (person) => ({
+  type: types.ADD_PERSON,
+  payload: person,
+});

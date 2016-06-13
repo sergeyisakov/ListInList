@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
+import people from './people';
 
-function stub(store = {}) {
-  return store;
-}
 
 const rootReducer = combineReducers({
-  stub,
+  people,
 });
 
 export default rootReducer;
