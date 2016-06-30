@@ -9,4 +9,4 @@ function App() {
   );
 }
 
-export default cssModules(App, styles);
+export default cssModules(App, styles)
